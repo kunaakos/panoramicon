@@ -1,22 +1,49 @@
-import { useState } from "react";
-import { chunk } from "lodash-es";
+import { useState } from "react"
+import { chunk } from "lodash-es"
 
-import { defaultTo64IfUndefined } from "../utils/control";
+import { defaultTo64IfUndefined } from "../utils/control"
 
-import { Controls, Grid, ProceedKey, Keys, SquareKey } from "./Grid";
-import { Control } from "./Control";
+import { Controls, Grid, ProceedKey, Keys, LockKey } from "./Grid"
+import { Control } from "./Control"
 
-import { useHttpMidi } from "../hooks/useHttpMidi";
+import { useHttpMidi } from "../hooks/useHttpMidi"
 
-import { API_URL, PANORAMICAL_MIDI_CC_NUMBERS } from "../utils/constants";
+import { API_URL, PANORAMICAL_MIDI_CC_NUMBERS } from "../utils/constants"
+
+const useLockState = () => {
+  const [state, setState] = useState({ x: false, y: false })
+
+  const toggleX = () => {
+    const newStateX = !state.x
+    const newState = {
+      x: newStateX,
+      y: newStateX ? false : state.y
+    }
+    setState(newState)
+  }
+
+  const toggleY = () => {
+    const newStateY = !state.y
+    const newState = {
+      x: newStateY ? false : state.x,
+      y: newStateY
+    }
+    setState(newState)
+  }
+
+  return {
+    locked: state,
+    toggle: { x: toggleX, y: toggleY }
+  }
+}
 
 export const App = () => {
-  const { midiState, midiControlChange, midiNote } = useHttpMidi({ apiUrl: API_URL });
-  const [locked, setLocked] = useState({ x: false, y: false})
-  const ccValues = PANORAMICAL_MIDI_CC_NUMBERS.map((controlNumber) => [
+  const { midiState, midiControlChange, midiNote } = useHttpMidi({ apiUrl: API_URL })
+  const { locked, toggle } = useLockState()
+  const controlValues = PANORAMICAL_MIDI_CC_NUMBERS.map((controlNumber) => [
     controlNumber,
     defaultTo64IfUndefined(midiState.control[controlNumber]),
-  ]);
+  ])
   const proceedPressed = midiState.key[64]
 
 
@@ -24,7 +51,7 @@ export const App = () => {
     <>
       <Grid>
         <Controls>
-          {chunk(ccValues, 2).map(([x, y]) => (
+          {chunk(controlValues, 2).map(([x, y]) => (
             <Control
               key={`${x[0]}-${y[0]}`}
               x={x[1]}
@@ -43,23 +70,23 @@ export const App = () => {
         <Keys>
           <ProceedKey
             onTouchStart={() => midiNote([
-              { type: 'noteon', note: 64}
+              { type: 'noteon', note: 64 }
             ])}
             onTouchEnd={() => midiNote([
-              { type: 'noteoff', note: 64}
+              { type: 'noteoff', note: 64 }
             ])}
             className={proceedPressed ? 'active' : undefined}
           />
-          <SquareKey
-            onTouchStart={() => setLocked({...locked, x: !locked.x})}
+          <LockKey
+            onTouchStart={toggle.x}
             className={locked.x ? 'active' : undefined}
           />
-          <SquareKey
-            onTouchStart={() => setLocked({...locked, y: !locked.y})}
+          <LockKey
+            onTouchStart={toggle.y}
             className={locked.y ? 'active' : undefined}
           />
         </Keys>
       </Grid>
     </>
-  );
-};
+  )
+}

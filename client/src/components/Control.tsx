@@ -34,7 +34,7 @@ const ControlDot = styled.div`
   width: 100%;
   height: 100%;
   /* vertical */
-  &:before {
+  &.showX:before {
     content: " ";
     position: absolute;
     z-index: -1;
@@ -46,7 +46,7 @@ const ControlDot = styled.div`
     background: black;
   }
   /* horizontal */
-  &:after {
+  &.showY:after {
     content: " ";
     z-index: -1;
     position: absolute;
@@ -107,8 +107,10 @@ export const Control = ({ x, xLocked, y, yLocked, offset }: ControlProps) => {
             containerSize
           )}px)`,
         }}
-      >
-        <ControlDot />
+        >
+        <ControlDot
+          className={`${xLocked ? '' : 'showX'} ${yLocked ? '' : 'showY'}`}
+        />
       </ControlDotContainer>
     </ControlContainer>
   );

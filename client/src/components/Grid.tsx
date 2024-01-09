@@ -69,7 +69,7 @@ export const ProceedKey = styled(Key)`
   }
 `
 
-export const SquareKey = styled(Key)`
+export const LockKey = styled(Key)`
   @media (orientation: landscape) {
     height: calc(100% / 6 - 2rem);
   }
