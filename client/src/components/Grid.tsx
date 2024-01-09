@@ -1,6 +1,6 @@
-import styled from "@emotion/styled/macro";
+import styled from "@emotion/styled/macro"
 
-import { ControlContainer } from "./Control";
+import { ControlContainer } from "./Control"
 
 export const Grid = styled.div`
   position: absolute;
@@ -23,7 +23,7 @@ export const Grid = styled.div`
     grid-template-rows: 2fr 2fr 2fr 1fr;
     aspect-ratio: 6/7;
   }
-`;
+`
 
 export const Keys = styled.div`
   display: flex;
@@ -43,41 +43,6 @@ export const Keys = styled.div`
   }
 `
 
-export const Key = styled.div`
-  background-color: white;
-  opacity: 0.7;
-  transition: opacity ease-in;
-  margin: 1rem;
-  @media (orientation: landscape) {
-    width: calc(100% - 2rem);
-  }
-  @media (orientation: portrait) {
-    height: calc(100% - 2rem);
-  }
-
-  &.active {
-    opacity: 1;
-  }
-`
-
-export const ProceedKey = styled(Key)`
-  @media (orientation: landscape) {
-    height: calc(100% / 3 * 2 - 2rem);
-  }
-  @media (orientation: portrait) {
-    width: calc(100% / 3 * 2 - 2rem);
-  }
-`
-
-export const LockKey = styled(Key)`
-  @media (orientation: landscape) {
-    height: calc(100% / 6 - 2rem);
-  }
-  @media (orientation: portrait) {
-    width: calc(100% / 6 - 2rem);
-  }
-`
-
 export const Controls = styled.div<{}>`
     position: relative;
     display: flex;
@@ -92,4 +57,4 @@ export const Controls = styled.div<{}>`
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 4;
-`;
+`

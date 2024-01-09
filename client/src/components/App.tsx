@@ -2,13 +2,13 @@ import { useState } from "react"
 import { chunk } from "lodash-es"
 
 import { defaultTo64IfUndefined } from "../utils/control"
+import { API_URL, PANORAMICAL_MIDI_CC_NUMBERS } from "../utils/constants"
 
-import { Controls, Grid, ProceedKey, Keys, LockKey } from "./Grid"
+import { Controls, Grid, Keys } from "./Grid"
+import { ProceedKey, LockKey } from "./Key"
 import { Control } from "./Control"
 
 import { useHttpMidi } from "../hooks/useHttpMidi"
-
-import { API_URL, PANORAMICAL_MIDI_CC_NUMBERS } from "../utils/constants"
 
 const useLockState = () => {
   const [state, setState] = useState({ x: false, y: false })
@@ -45,7 +45,6 @@ export const App = () => {
     defaultTo64IfUndefined(midiState.control[controlNumber]),
   ])
   const proceedPressed = midiState.key[64]
-
 
   return (
     <>
