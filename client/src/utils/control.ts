@@ -27,7 +27,7 @@ export const pxOffsetToMidiOffset = (
   containerWidth: number
 ): Pair => [
     pxToMidi(xOf(values), containerWidth),
-    pxToMidi(yOf(values), containerWidth),
+    -1 * pxToMidi(yOf(values), containerWidth),
   ]
 
 export const defaultTo64IfUndefined = (value: number | undefined): number =>

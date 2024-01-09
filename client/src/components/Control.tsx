@@ -22,7 +22,7 @@ export const ControlContainer = styled.div`
 
 const ControlDotContainer = styled.div`
   position: absolute;
-  top: -2.5%;
+  bottom: -2.5%;
   left: -2.5%;
   height: 5%;
   width: 5%;
@@ -103,10 +103,7 @@ export const Control = ({ x, xLocked, y, yLocked, offset }: ControlProps) => {
     >
       <ControlDotContainer
         style={{
-          transform: `translate(${midiToPx(x, containerSize)}px, ${midiToPx(
-            y,
-            containerSize
-          )}px)`,
+          transform: `translate(${midiToPx(x, containerSize)}px, -${midiToPx(y, containerSize)}px)`,
         }}
       >
         <ControlDot
