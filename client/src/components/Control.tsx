@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect, TouchEvent } from "react";
-import styled from "@emotion/styled/macro";
+import { useState, useRef, useEffect, TouchEvent } from "react"
+import styled from "@emotion/styled/macro"
 
-import { Nullable, Pair } from "../utils/types";
+import { Nullable, Pair } from "../utils/types"
 import {
   getOffset,
   getTouchCoords,
   midiToPx,
   pxOffsetToMidiOffset,
-} from "../utils/control";
+} from "../utils/control"
 
 export const ControlContainer = styled.div`
   aspect-ratio: 1;
@@ -18,7 +18,7 @@ export const ControlContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-`;
+`
 
 const ControlDotContainer = styled.div`
   position: absolute;
@@ -27,7 +27,7 @@ const ControlDotContainer = styled.div`
   height: 5%;
   width: 5%;
   transition: translate 100ms linear;
-`;
+`
 
 const ControlDot = styled.div`
   position: absolute;
@@ -57,7 +57,7 @@ const ControlDot = styled.div`
     height: 100%;
     background: black;
   }
-`;
+`
 
 type ControlProps = {
   x: number;
@@ -65,33 +65,34 @@ type ControlProps = {
   y: number;
   yLocked: boolean;
   offset: (x: number, y: number) => void;
-};
+}
 
 export const Control = ({ x, xLocked, y, yLocked, offset }: ControlProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState<number>(0);
-  const [prevTouchCoords, setPrevTouchCoords] = useState<Nullable<Pair>>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerSize, setContainerSize] = useState<number>(0)
+  const [prevTouchCoords, setPrevTouchCoords] = useState<Nullable<Pair>>(null)
 
   const handleTouchStart = (e: TouchEvent) =>
-    setPrevTouchCoords(getTouchCoords(e));
-  const handleTouchEnd = (e: TouchEvent) => setPrevTouchCoords(null);
+    setPrevTouchCoords(getTouchCoords(e))
+
+  const handleTouchEnd = (e: TouchEvent) => setPrevTouchCoords(null)
 
   const handleTouchMove = (e: TouchEvent) => {
-    if (!prevTouchCoords || !containerRef.current) return;
-    const touchCoords = getTouchCoords(e);
-    const touchOffset = getOffset(prevTouchCoords, touchCoords);
-    const containerWidth = containerRef.current.offsetWidth; // assuming container is a square
+    if (!prevTouchCoords || !containerRef.current) return
+    const touchCoords = getTouchCoords(e)
+    const touchOffset = getOffset(prevTouchCoords, touchCoords)
+    const containerWidth = containerRef.current.offsetWidth // assuming container is a square
     const [xOffset, yOffset] = pxOffsetToMidiOffset(
       touchOffset,
       containerWidth
     );
-    offset(xLocked ? 0 : xOffset, yLocked ? 0: yOffset);
-    setPrevTouchCoords(touchCoords);
+    offset(xLocked ? 0 : xOffset, yLocked ? 0 : yOffset)
+    setPrevTouchCoords(touchCoords)
   };
 
   useEffect(() => {
-    containerRef.current && setContainerSize(containerRef.current.offsetWidth);
-  }, []);
+    containerRef.current && setContainerSize(containerRef.current.offsetWidth)
+  }, [])
 
   return (
     <ControlContainer
@@ -107,11 +108,11 @@ export const Control = ({ x, xLocked, y, yLocked, offset }: ControlProps) => {
             containerSize
           )}px)`,
         }}
-        >
+      >
         <ControlDot
           className={`${xLocked ? '' : 'showX'} ${yLocked ? '' : 'showY'}`}
         />
       </ControlDotContainer>
     </ControlContainer>
-  );
-};
+  )
+}
