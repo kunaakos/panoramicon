@@ -1,6 +1,7 @@
 import styled from "@emotion/styled/macro"
 
 export const Key = styled.div`
+  user-select: none;
   background-color: white;
   opacity: 0.7;
   transition: opacity ease-in;
