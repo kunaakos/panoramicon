@@ -28,4 +28,4 @@ Panoramical works best on Windows, but in my experience Windows eventually puts 
 Couldn't get Panoramical running on modern macOS. Everything else works fine!
 
 ### Linux
-Panoramical does run when installed from Steam, if you can get it running smoothly on your machine (I get sound distorsion). The server and client work perfectly.
+Panoramical does run when installed from Steam, if you can get it running smoothly on your machine (I get sound distortion). The server and client work perfectly.
